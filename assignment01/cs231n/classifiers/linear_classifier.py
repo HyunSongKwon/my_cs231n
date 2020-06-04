@@ -29,7 +29,9 @@ class LinearClassifier(object):
 
     Outputs:
     A list containing the value of the loss function at each training iteration.
-    """
+   
+   """
+    print("X.shape",X.shape)
     num_train, dim = X.shape
     num_classes = np.max(y) + 1 # assume y takes values 0...K-1 where K is number of classes
     if self.W is None:

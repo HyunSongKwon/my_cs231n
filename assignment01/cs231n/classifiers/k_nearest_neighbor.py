@@ -130,30 +130,8 @@ class KNearestNeighbor(object):
     - y: A numpy array of shape (num_test,) containing predicted labels for the
       test data, where y[i] is the predicted label for the test point X[i].  
     """
-    num_test = dists.shape[0] #(500,5000)
-    y_pred = np.zeros(num_test)
     
-    '''
-    sorted_dists = np.argsort(dists)
-    # A list of length k storing the labels of the k nearest neighbors to the ith test point.      
-    for i in xrange(num_test):
-        dist_element = dists[i,:]
-        argsort_dist_element = dist_element.argsort()
-        argsort_dist_element = np.array(argsort_dist_element).tolist()#index()함수 쓰기 위해
-        closest_y = []
-        for k_num in range(k):           
-            closest_y.append(self.y_train[argsort_dist_element.index(k_num)]) #가까운 k개 인덱스를 찾아 label알아내기
-       
-        y_pred[i] = np.bincount(closest_y).argmax()              
-    '''  
- 
-    for i in range(num_test):
-        closest_y=[]
-        closest_y = np.argsort(dists[i,:])
-        pick_k = self.y_train[closest_y[:k]]
-        y_pred[i] = np.bincount(pick_k).argmax()
-            
-      # Use the distance matrix to find the k nearest neighbors of the ith    
+     # Use the distance matrix to find the k nearest neighbors of the ith    
       # testing point, and use self.y_train to find the labels of these       
       # neighbors. Store these labels in closest_y.                           
       # Hint: Look up the function numpy.argsort.                             
@@ -162,7 +140,19 @@ class KNearestNeighbor(object):
       # Now that you have found the labels of the k nearest neighbors, you    
       # need to find the most common label in the list closest_y of labels.   
       # Store this label in y_pred[i]. Break ties by choosing the smaller     
-      # label.                                                                
+      # label.       
+        
+        
+    num_test = dists.shape[0] #(500,5000)
+    y_pred = np.zeros(num_test)
+    
+    for i in range(num_test):
+        closest_y=[]
+        closest_y = np.argsort(dists[i,:])
+        pick_k = self.y_train[closest_y[:k]] #가까운 k개 인덱스를 찾아 label알아내기
+        y_pred[i] = np.bincount(pick_k).argmax()
+            
+                                                              
       
     return y_pred
 

@@ -79,8 +79,7 @@ class TwoLayerNet(object):
     X2 = np.maximum(0, z)  # ReLU
     scores = X2.dot(W2) + b2 
     #############################################################################
-    #                              END OF YOUR CODE                             #
-    #######################################################################3######
+ 
     
     # If the targets are not given then jump out, we're done
     if y is None:
@@ -103,9 +102,8 @@ class TwoLayerNet(object):
     loss /= N
     loss += reg * (np.sum(W2**2) + np.sum( W1**2 )) # l2 regularization
     #############################################################################
-    #                              END OF YOUR CODE                             #
-    #############################################################################
-
+    
+    
     # Backward pass: compute gradients
     grads = {}
     #############################################################################
@@ -116,7 +114,7 @@ class TwoLayerNet(object):
     softmax_matrix[np.arange(N) ,y] -= 1
     softmax_matrix /= N
 
-    # W2 gradient !!!!!!!
+    # W2 gradient 
     dW2 = X2.T.dot(softmax_matrix)   # [HxN] * [NxC] = [HxC]
 
     # b2 gradient
@@ -139,8 +137,6 @@ class TwoLayerNet(object):
     grads['W2'] = dW2
     grads['b2'] = db2
     
-    #############################################################################
-    #                              END OF YOUR CODE                             #
     #############################################################################
 
     return loss, grads
@@ -186,25 +182,24 @@ class TwoLayerNet(object):
       batch_indices = np.random.choice(num_train, batch_size)
       X_batch = X[batch_indices]
       y_batch = y[batch_indices]
-    
-      #########################################################################
+      #
 
 
+        
       # Compute loss and gradients using the current minibatch
       loss, grads = self.loss(X_batch, y=y_batch, reg=reg)
       loss_history.append(loss)
 
+    
       #########################################################################
       # TODO: Use the gradients in the grads dictionary to update the         #
       # parameters of the network (stored in the dictionary self.params)      #
       # using stochastic gradient descent. You'll need to use the gradients   #
       # stored in the grads dictionary defined above.                         #
       #########################################################################
-    
       for key in self.params:
         self.params[key] -= learning_rate * grads[key]
-      #########################################################################
-     
+     #
 
       if verbose and it % 100 == 0:
         print('iteration %d / %d: loss %f' % (it, num_iters, loss))
